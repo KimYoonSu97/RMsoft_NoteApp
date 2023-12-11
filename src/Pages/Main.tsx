@@ -13,6 +13,9 @@ const Main = () => {
 
   useEffect(() => {
     setIsNoteBookExist(memoExist);
+    if (location.search.includes("memo")) {
+      setIsNoteBookExist(true);
+    }
   }, [location]);
 
   return (

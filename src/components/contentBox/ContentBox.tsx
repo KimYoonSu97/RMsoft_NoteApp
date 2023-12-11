@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useGetMemoExist } from "../../hooks/useGetMemoExist";
 import NoMemo from "./NoMemo";
+import Editor from "../editor/Editor";
+import { useLocation } from "react-router-dom";
 
 const ContentBox = () => {
+  const location = useLocation();
+  const [isMemoExist, setIsMemoExist] = useState<boolean>(false);
   const memoExist = useGetMemoExist();
 
-  return <S.Container>{memoExist ? "에디터" : <NoMemo />}</S.Container>;
+  useEffect(() => {
+    if (location.search.includes("memo")) {
+      setIsMemoExist(true);
+    } else {
+      setIsMemoExist(false);
+    }
+  }, [location]);
+
+  return (
+    <S.Container>
+      {isMemoExist ? <Editor /> : <NoMemo setIsMemoExist={setIsMemoExist} />}
+    </S.Container>
+  );
 };
 
 export default ContentBox;
