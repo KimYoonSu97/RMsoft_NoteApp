@@ -5,27 +5,32 @@ import shortid from "shortid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getNotebookName } from "../../../util/getNotebookName";
 import Notebook from "./Notebook";
+import { NotebookListAtom } from "../../../store/state";
+import { useAtom } from "jotai";
 
 const NoteBookList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [noteBooks, setNoteBooks] = useState<string[]>([]);
+  // const [isOpen, setIsOpen] = useAtom(NotebookListAtom);
+
+  const [notebooks, setNotebooks] = useState<string[]>([]);
 
   useEffect(() => {
-    const noteBooks = Object.keys(localStorage).filter((item) =>
-      item.includes("noteBook")
+    const notebooks = Object.keys(localStorage).filter((item) =>
+      item.includes("notebook")
     );
-    setNoteBooks(noteBooks);
+    setNotebooks(notebooks);
   }, [location]);
 
   const addNoteBook = () => {
-    const newNoteBooks = {
-      title: "새노트북",
-      color: "red",
+    const newNotebook = {
+      title: window.prompt("노트북 이름을 입력해주세요"),
+      color: "pink",
+      memo: [],
     };
     const noteId = shortid.generate();
-    localStorage.setItem("noteBook" + noteId, JSON.stringify(newNoteBooks));
+    localStorage.setItem("notebook" + noteId, JSON.stringify(newNotebook));
     setIsOpen(true);
     navigate(`/?note=notebook${noteId}`);
   };
@@ -54,9 +59,15 @@ const NoteBookList = () => {
         />
       </S.Tab>
       {isOpen &&
-        noteBooks.length > 0 &&
-        noteBooks.map((noteBook, index) => {
-          return <Notebook key={noteBook} notebook={noteBook} />;
+        notebooks.length > 0 &&
+        notebooks.map((noteBook, index) => {
+          return (
+            <Notebook
+              key={noteBook}
+              notebook={noteBook}
+              setNotebooks={setNotebooks}
+            />
+          );
         })}
     </S.Container>
   );

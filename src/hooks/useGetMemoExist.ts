@@ -12,11 +12,12 @@ export const useGetMemoExist = () => {
     const isMemoExist = localStorage.getItem(location.search);
     if (isMemoExist === null) {
       setMemoExist(false);
+
       return;
     }
 
     setMemoExist(true);
-  }, []);
+  }, [location]);
 
   const exist = useMemo(() => memoExist, [location]);
 

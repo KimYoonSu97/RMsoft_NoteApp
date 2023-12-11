@@ -3,12 +3,15 @@ import { getNotebookName } from "../../../util/getNotebookName";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Trash2 } from "lucide-react";
+import { useAtom } from "jotai";
+import { NotebookListAtom } from "../../../store/state";
 
 interface NotebookProps {
   notebook: string;
+  setNotebooks: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Notebook = ({ notebook }: NotebookProps) => {
+const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
   const navigate = useNavigate();
 
   const [showDelete, setShowDelete] = useState(false);
@@ -23,24 +26,18 @@ const Notebook = ({ notebook }: NotebookProps) => {
     setShowDelete(false);
   };
   const removeNoteBook = () => {
-    // navigate("/");
     if (window.confirm("노트북을 삭제하시겠습니까?")) {
-      navigate("/");
       localStorage.removeItem(notebook);
+      setNotebooks((prev) => prev.filter((item) => item !== notebook));
+      navigate("/");
     } else {
-      navigate(-1);
+      return;
     }
   };
 
-  if (getNotebookName(notebook) === null) navigate("/");
-
   return (
-    <S.Container
-      onClick={onClick}
-      onMouseOver={onMouseOver}
-      onMouseLeave={onMouseLeave}
-    >
-      {getNotebookName(notebook).title}
+    <S.Container onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+      <S.Title onClick={onClick}>{getNotebookName(notebook).title}</S.Title>
       {showDelete && (
         <div onClick={removeNoteBook}>
           <Trash2 color="gray" />
@@ -60,4 +57,5 @@ const S = {
     align-items: center;
     justify-content: space-between;
   `,
+  Title: styled.div``,
 };
