@@ -10,6 +10,7 @@ interface NotebookProps {
 
 const Notebook = ({ notebook }: NotebookProps) => {
   const navigate = useNavigate();
+
   const [showDelete, setShowDelete] = useState(false);
 
   const onClick = () => {
@@ -22,13 +23,16 @@ const Notebook = ({ notebook }: NotebookProps) => {
     setShowDelete(false);
   };
   const removeNoteBook = () => {
-    navigate("/");
+    // navigate("/");
     if (window.confirm("노트북을 삭제하시겠습니까?")) {
+      navigate("/");
       localStorage.removeItem(notebook);
     } else {
       navigate(-1);
     }
   };
+
+  if (getNotebookName(notebook) === null) navigate("/");
 
   return (
     <S.Container
