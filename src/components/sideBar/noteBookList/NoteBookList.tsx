@@ -4,6 +4,7 @@ import { ChevronRight, ChevronDown, Plus } from "lucide-react";
 import shortid from "shortid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getNotebookName } from "../../../util/getNotebookName";
+import Notebook from "./Notebook";
 
 const NoteBookList = () => {
   const navigate = useNavigate();
@@ -55,16 +56,7 @@ const NoteBookList = () => {
       {isOpen &&
         noteBooks.length > 0 &&
         noteBooks.map((noteBook, index) => {
-          return (
-            <S.ContentBox
-              key={index}
-              onClick={() => {
-                navigate(`/?note=${noteBook}`);
-              }}
-            >
-              {getNotebookName(noteBook).title}
-            </S.ContentBox>
-          );
+          return <Notebook key={noteBook} notebook={noteBook} />;
         })}
     </S.Container>
   );

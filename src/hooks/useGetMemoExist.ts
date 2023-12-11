@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const useGetMemoExist = () => {
-  console.log("useGetMemoExist호출");
   const [memoExist, setMemoExist] = useState(false);
   const location = useLocation();
   useEffect(() => {
