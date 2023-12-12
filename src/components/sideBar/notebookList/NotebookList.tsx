@@ -8,7 +8,7 @@ import Notebook from "./Notebook";
 import { NotebookListAtom } from "../../../store/state";
 import { useAtom } from "jotai";
 
-const NoteBookList = () => {
+const NotebookList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -73,7 +73,7 @@ const NoteBookList = () => {
   );
 };
 
-export default NoteBookList;
+export default NotebookList;
 
 const S = {
   Container: styled.div`

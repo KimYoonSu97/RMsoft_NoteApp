@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 const App = () => {
   return (
-    <S.Container>hello</S.Container>
+    // <S.Container>hello</S.Container>
 
-    // <BrowserRouter>
-    //   <Router />
-    // </BrowserRouter>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
 };
 

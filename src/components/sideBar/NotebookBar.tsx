@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import NoteBookList from "./noteBookList/NoteBookList";
+import NotebookList from "./notebookList/NotebookList";
 
-const NoteBookBar = () => {
+const NotebookBar = () => {
   return (
     <S.Container>
-      <NoteBookList />
+      <NotebookList />
     </S.Container>
   );
 };
 
-export default NoteBookBar;
+export default NotebookBar;
 
 const S = {
   Container: styled.div`
