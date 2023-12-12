@@ -29,7 +29,7 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
     if (window.confirm("메모를 삭제하시겠습니까?")) {
       localStorage.removeItem(memo.id);
       setMemoList((prev) => prev.filter((item) => item.id !== memo.id));
-      navigate(`/${param.notebookId}`);
+      navigate(`/`);
     } else {
       return;
     }

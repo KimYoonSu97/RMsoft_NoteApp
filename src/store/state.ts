@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 
 export interface MemoType {
-  description: string;
+  editorState: string;
   date: string;
   id: string;
 }

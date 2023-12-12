@@ -19,7 +19,6 @@ const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
 
   const onClick = () => {
     const memoList = getMemoListByNotebookId(notebook);
-    console.log(memoList);
     if (memoList) {
       navigate(`/${notebook}/?memo=${memoList[0].id}`);
     } else {

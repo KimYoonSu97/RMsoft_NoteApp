@@ -4,39 +4,23 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import shortid from "shortid";
 import styled from "styled-components";
 import { MemoListAtom } from "../../store/state";
+import { createEditor } from "lexical";
+import { getInitialMemo } from "../../util/getInitialMemo";
 
-interface NoMemoProps {
-  setIsMemoExist: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const NoMemo = ({ setIsMemoExist }: NoMemoProps) => {
-  const location = useLocation();
+const NoMemo = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [memo, setMemo] = useAtom(MemoListAtom);
 
   const onClick = () => {
     const memoId = params.notebookId + shortid.generate();
     const newMemo = {
-      description: "",
+      editorState: getInitialMemo(),
       date: new Date(),
       id: memoId,
     };
     localStorage.setItem(memoId, JSON.stringify(newMemo));
 
     navigate(`/${params.notebookId}/?memo=${memoId}`);
-
-    // // const newMemo = {
-    // const notebookId = location.search.replace("?note=notebook", "");
-    // const newMemo = {
-    //   description: "",
-    //   date: new Date().toLocaleDateString(),
-    // };
-    // const memoId = `${notebookId}-${shortid.generate()}`;
-
-    // setIsMemoExist(true);
-    // setMemo([newMemo]);
-    // navigate(`/?memo=${memoId}`);
   };
   return (
     <S.Container>

@@ -6,6 +6,8 @@ import { MemoListAtom } from "../../store/state";
 import MemoList from "./memoList/MemoList";
 import { useNavigate, useParams } from "react-router-dom";
 import shortid from "shortid";
+import { createEditor } from "lexical";
+import { getInitialMemo } from "../../util/getInitialMemo";
 
 const MemoBar = () => {
   const params = useParams();
@@ -13,9 +15,10 @@ const MemoBar = () => {
 
   const onClick = () => {
     const memoId = params.notebookId + shortid.generate();
+
     const newMemo = {
-      description: "",
-      date: new Date().toLocaleDateString(),
+      editorState: getInitialMemo(),
+      date: new Date(),
       id: memoId,
     };
     localStorage.setItem(memoId, JSON.stringify(newMemo));
