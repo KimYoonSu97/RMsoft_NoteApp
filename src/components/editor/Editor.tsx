@@ -1,26 +1,34 @@
-import React from "react";
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-
-const initialConfig = {
-  namespace: "lexical-editro",
-  theme: {},
-  onError: (error: Error) => {
-    console.error(error);
-  },
-};
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { getMemoData } from "../../util/getMemoData";
+import BasicEditor from "./BasicEditor";
 
 const Editor = () => {
+  const location = useLocation();
+
+  const [memoId, setMemoId] = useState<string>(location.pathname.split("/")[2]);
+  const [serializedEditorState, setSerializedEditorState] =
+    useState<string>("");
+
+  useEffect(() => {
+    const memoId = location.pathname.split("/")[2];
+
+    setMemoId(memoId);
+    if (!memoId) return;
+    const newEditorState = getMemoData(memoId);
+    console.log(newEditorState);
+    setSerializedEditorState(newEditorState!);
+  }, [location.pathname]);
+
+  if (!serializedEditorState) return <div>loading...</div>;
+
   return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <RichTextPlugin
-        contentEditable={<ContentEditable />}
-        placeholder={<div>플레이스홀더</div>}
-        ErrorBoundary={LexicalErrorBoundary}
+    <div>
+      <BasicEditor
+        serializedEditorState={serializedEditorState}
+        memoId={memoId}
       />
-    </LexicalComposer>
+    </div>
   );
 };
 

@@ -17,8 +17,8 @@ const NoteBookList = () => {
   const [notebooks, setNotebooks] = useState<string[]>([]);
 
   useEffect(() => {
-    const notebooks = Object.keys(localStorage).filter((item) =>
-      item.includes("notebook")
+    const notebooks = Object.keys(localStorage).filter(
+      (item) => item.length < 13
     );
     setNotebooks(notebooks);
   }, [location]);
@@ -30,9 +30,9 @@ const NoteBookList = () => {
       memo: [],
     };
     const noteId = shortid.generate();
-    localStorage.setItem("notebook" + noteId, JSON.stringify(newNotebook));
+    localStorage.setItem(noteId, JSON.stringify(newNotebook));
     setIsOpen(true);
-    navigate(`/?note=notebook${noteId}`);
+    navigate(`/${noteId}`);
   };
 
   const openHandler = () => {

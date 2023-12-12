@@ -1,29 +1,26 @@
+import { useAtom } from "jotai";
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import shortid from "shortid";
 import styled from "styled-components";
+import { MemoListAtom } from "../../store/state";
+import { createEditor } from "lexical";
+import { getInitialMemo } from "../../util/getInitialMemo";
 
-interface NoMemoProps {
-  setIsMemoExist: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const NoMemo = ({ setIsMemoExist }: NoMemoProps) => {
-  const location = useLocation();
+const NoMemo = () => {
+  const params = useParams();
   const navigate = useNavigate();
 
   const onClick = () => {
-    console.log("새 메모 작성하기");
-    // const newMemo = {
-    const notebookId = location.search.replace("?note=notebook", "");
+    const memoId = params.notebookId + shortid.generate();
     const newMemo = {
-      description: "",
-      date: new Date().toLocaleDateString(),
+      editorState: getInitialMemo(),
+      date: new Date(),
+      id: memoId,
     };
-    const memoId = `${notebookId}-${shortid.generate()}`;
-
     localStorage.setItem(memoId, JSON.stringify(newMemo));
-    setIsMemoExist(true);
-    navigate(`/?memo=${memoId}`);
+
+    navigate(`/${params.notebookId}/${memoId}`);
   };
   return (
     <S.Container>

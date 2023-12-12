@@ -8,6 +8,8 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<RootLayout />}>
         <Route path="/" element={<Main />} />
+        <Route path="/:notebookId" element={<Main />} />
+        <Route path="/:notebookId/:memoId" element={<Main />} />
       </Route>
     </Routes>
   );

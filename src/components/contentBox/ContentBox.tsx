@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useGetMemoExist } from "../../hooks/useGetMemoExist";
 import NoMemo from "./NoMemo";
 import Editor from "../editor/Editor";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { MemoListAtom, MemoType } from "../../store/state";
+import { useAtom } from "jotai";
 
 const ContentBox = () => {
   const location = useLocation();
-  const [isMemoExist, setIsMemoExist] = useState<boolean>(false);
-  const memoExist = useGetMemoExist();
 
-  useEffect(() => {
-    if (location.search.includes("memo")) {
-      setIsMemoExist(true);
-    } else {
-      setIsMemoExist(false);
-    }
-  }, [location]);
+  const [memoList, setMemoList] = useAtom(MemoListAtom);
 
   return (
-    <S.Container>
-      {isMemoExist ? <Editor /> : <NoMemo setIsMemoExist={setIsMemoExist} />}
+    <S.Container $isMemoExist={memoList}>
+      {memoList.length > 0 ? <Editor /> : <NoMemo />}
+
+      {/* {params.memoId ?? <Editor></Editor>} */}
     </S.Container>
   );
 };
 
 export default ContentBox;
 
+interface ContainerProps {
+  $isMemoExist: MemoType[] | null;
+}
+
 const S = {
-  Container: styled.div`
+  Container: styled.div<ContainerProps>`
     background-color: green;
-    width: 100%;
+    width: ${(props) =>
+      props.$isMemoExist ? "calc(100% - 400px)" : "calc(100% - 200px)"};
+    /* width: calc(100% - 400px); */
   `,
 };

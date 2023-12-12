@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { getNotebookName } from "../../../util/getNotebookName";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Trash2 } from "lucide-react";
 import { useAtom } from "jotai";
-import { NotebookListAtom } from "../../../store/state";
+import { MemoListAtom, MemoType, NotebookListAtom } from "../../../store/state";
 
 interface NotebookProps {
   notebook: string;
@@ -12,12 +12,19 @@ interface NotebookProps {
 }
 
 const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
-  const navigate = useNavigate();
+  const [memoList, setMemoList] = useAtom(MemoListAtom);
 
+  const navigate = useNavigate();
+  const param = useParams();
   const [showDelete, setShowDelete] = useState(false);
 
   const onClick = () => {
-    navigate(`/?note=${notebook}`);
+    console.log(memoList);
+    if (memoList.length > 0) {
+      navigate(`/${notebook}/${memoList[0].id}`);
+    } else {
+      navigate(`/${notebook}`);
+    }
   };
   const onMouseOver = () => {
     setShowDelete(true);

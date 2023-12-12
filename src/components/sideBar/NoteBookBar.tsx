@@ -17,5 +17,6 @@ const S = {
     background-color: red;
     max-width: 200px;
     width: 100%;
+    height: calc(100vh - 50px);
   `,
 };
