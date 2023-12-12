@@ -1,13 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import NoteBookList from "./noteBookList/NoteBookList";
 
 const NoteBookBar = () => {
-  return (
-    <S.Container>
-      <NoteBookList />
-    </S.Container>
-  );
+  return <S.Container>{/* <NoteBookList />  */}</S.Container>;
 };
 
 export default NoteBookBar;

@@ -8,22 +8,22 @@ const MemoBar = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const onClick = () => {
-    const memoId = params.notebookId + shortid.generate();
+  // const onClick = () => {
+  //   const memoId = params.notebookId + shortid.generate();
 
-    const newMemo = {
-      editorState: getInitialMemo(),
-      date: new Date(),
-      id: memoId,
-    };
-    localStorage.setItem(memoId, JSON.stringify(newMemo));
-    navigate(`/${params.notebookId}/?memo=${memoId}`);
-  };
+  //   const newMemo = {
+  //     editorState: getInitialMemo(),
+  //     date: new Date(),
+  //     id: memoId,
+  //   };
+  //   localStorage.setItem(memoId, JSON.stringify(newMemo));
+  //   navigate(`/${params.notebookId}/?memo=${memoId}`);
+  // };
 
   return (
     <S.Container>
-      <MemoList />
-      <button onClick={onClick}>메모추가하기</button>
+      {/* <MemoList /> */}
+      {/* <button onClick={onClick}>메모추가하기</button> */}
     </S.Container>
   );
 };
