@@ -1,13 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import NotebookList from "./notebookList/NotebookList";
 
 const NotebookBar = () => {
-  return (
-    <S.Container>
-      <NotebookList />
-    </S.Container>
-  );
+  return <S.Container>{/* <NotebookList /> */}</S.Container>;
 };
 
 export default NotebookBar;

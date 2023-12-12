@@ -4,7 +4,7 @@ import { ChevronRight, ChevronDown, Plus } from "lucide-react";
 import shortid from "shortid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getNotebookName } from "../../../util/getNotebookName";
-import Notebook from "./Notebook";
+// import Notebook from "./Notebook";
 import { NotebookListAtom } from "../../../store/state";
 import { useAtom } from "jotai";
 
@@ -58,7 +58,7 @@ const NotebookList = () => {
           children={<Plus color="gray" />}
         />
       </S.Tab>
-      {isOpen &&
+      {/* {isOpen &&
         notebooks.length > 0 &&
         notebooks.map((noteBook, index) => {
           return (
@@ -68,7 +68,7 @@ const NotebookList = () => {
               setNotebooks={setNotebooks}
             />
           );
-        })}
+        })} */}
     </S.Container>
   );
 };
