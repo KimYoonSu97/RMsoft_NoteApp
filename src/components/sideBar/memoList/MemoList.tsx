@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { MemoType } from "../../../store/state";
+import { MemoListAtom, MemoType } from "../../../store/state";
 import { getMemoListByNotebookId } from "../../../util/getMemoListByNotebookId";
 import Memo from "./Memo";
+import { useAtom } from "jotai";
 
 const MemoList = () => {
   const param = useParams();
   const location = useLocation();
-  const [memoList, setMemoList] = useState<MemoType[]>([]);
+  // const [memoList, setMemoList] = useState<MemoType[]>([]);
+  const [memoList, setMemoList] = useAtom(MemoListAtom);
 
   useEffect(() => {
     const memoList = getMemoListByNotebookId(param.notebookId!);
-
+    console.log(memoList);
     if (!memoList) return;
     setMemoList(memoList);
   }, [location]);

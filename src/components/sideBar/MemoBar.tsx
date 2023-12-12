@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Memo from "./memoList/Memo";
-import { useAtom } from "jotai";
-import { MemoListAtom } from "../../store/state";
 import MemoList from "./memoList/MemoList";
 import { useNavigate, useParams } from "react-router-dom";
 import shortid from "shortid";
-import { createEditor } from "lexical";
 import { getInitialMemo } from "../../util/getInitialMemo";
 
 const MemoBar = () => {

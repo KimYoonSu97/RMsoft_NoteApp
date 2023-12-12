@@ -16,6 +16,8 @@ import {
 } from "lexical";
 import { throttle } from "lodash";
 import { useLocation } from "react-router-dom";
+import { useAtom } from "jotai";
+import { MemoListAtom } from "../../store/state";
 
 interface BasicEditorProps {
   initialConfig: InitialConfigType;
@@ -23,6 +25,8 @@ interface BasicEditorProps {
 
 const BasicEditor = ({ initialConfig }: BasicEditorProps) => {
   const location = useLocation();
+  const [memoList, setMemoList] = useAtom(MemoListAtom);
+
   const [editorState, setEditorState] =
     useState<SerializedEditorState<SerializedLexicalNode>>();
 
@@ -42,6 +46,15 @@ const BasicEditor = ({ initialConfig }: BasicEditorProps) => {
         id: memoId,
       };
       localStorage.setItem(memoId, JSON.stringify(updateMemo));
+
+      const newMemoList = memoList.map((memo) => {
+        if (memo.id === memoId) {
+          return updateMemo;
+        }
+        return memo;
+      });
+
+      setMemoList(newMemoList);
     }, 3000),
     []
   );

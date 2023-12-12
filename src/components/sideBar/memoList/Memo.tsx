@@ -3,6 +3,14 @@ import { MemoType } from "../../../store/state";
 import styled from "styled-components";
 import { Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  LexicalNode,
+  createEditor,
+  LexicalCommand,
+  EditorState,
+} from "lexical";
+import MemoPreview from "./MemoPreview";
+import { $getRoot } from "lexical";
 
 interface MemoProps {
   memo: MemoType;
@@ -13,6 +21,9 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
   const [showDelete, setShowDelete] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
+  const editor = createEditor({
+    editable: false,
+  });
 
   const onClick = () => {
     navigate(`/${param.notebookId}/?memo=${memo.id}`);
@@ -35,9 +46,25 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
     }
   };
 
+  if (!memo.editorState) return <div>loading...</div>;
+  const editorState = JSON.stringify(memo.editorState);
+
+  const parsedEditorState = editor.parseEditorState(editorState);
+  const editorStateTextString = parsedEditorState.read(() =>
+    $getRoot().getTextContent()
+  );
+  console.log(editorStateTextString);
+
+  const title = editorStateTextString.split("\n\n")[0];
+  const body = editorStateTextString.split("\n\n")[1];
+
   return (
     <S.Container onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <div onClick={onClick}> {memo.date}</div>
+      <div onClick={onClick}>
+        {title}
+        {body ? body : "내용 없음"}
+        {/* <MemoPreview initialConfig={initialConfig} /> */}
+      </div>
       {showDelete && (
         <div onClick={removeMemo}>
           <Trash2 color="gray" />
