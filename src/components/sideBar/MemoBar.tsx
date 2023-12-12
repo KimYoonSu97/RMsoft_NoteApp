@@ -33,7 +33,6 @@ export default MemoBar;
 const S = {
   Container: styled.div`
     background-color: orange;
-    /* max-width: 200px; */
-    width: 200px;
+    width: 300px;
   `,
 };

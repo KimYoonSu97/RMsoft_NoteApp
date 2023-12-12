@@ -3,13 +3,7 @@ import { MemoType } from "../../../store/state";
 import styled from "styled-components";
 import { Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  LexicalNode,
-  createEditor,
-  LexicalCommand,
-  EditorState,
-} from "lexical";
-import MemoPreview from "./MemoPreview";
+import { createEditor } from "lexical";
 import { $getRoot } from "lexical";
 
 interface MemoProps {
@@ -26,7 +20,7 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
   });
 
   const onClick = () => {
-    navigate(`/${param.notebookId}/?memo=${memo.id}`);
+    navigate(`/${param.notebookId}/${memo.id}`);
   };
 
   const onMouseOver = () => {
@@ -53,22 +47,22 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
   const editorStateTextString = parsedEditorState.read(() =>
     $getRoot().getTextContent()
   );
-  console.log(editorStateTextString);
 
   const title = editorStateTextString.split("\n\n")[0];
   const body = editorStateTextString.split("\n\n")[1];
 
   return (
     <S.Container onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <div onClick={onClick}>
-        {title}
-        {body ? body : "내용 없음"}
-        {/* <MemoPreview initialConfig={initialConfig} /> */}
-      </div>
+      <S.Contents onClick={onClick}>
+        <S.Title>{title}</S.Title>
+        <S.Body> {body ? body : "내용 없음"}</S.Body>
+        {new Date(memo.date).toLocaleString()}
+        {memo.date && <div>{memo.date.toLocaleString()}</div>}
+      </S.Contents>
       {showDelete && (
-        <div onClick={removeMemo}>
+        <S.removeButton onClick={removeMemo}>
           <Trash2 color="gray" />
-        </div>
+        </S.removeButton>
       )}
     </S.Container>
   );
@@ -77,5 +71,36 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
 export default Memo;
 
 const S = {
-  Container: styled.div``,
+  Container: styled.div`
+    display: flex;
+    width: 100%;
+    position: relative;
+    border: 1px solid black;
+    cursor: pointer;
+  `,
+  Contents: styled.div`
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  `,
+  Title: styled.div`
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  `,
+  Body: styled.div`
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  `,
+  removeButton: styled.div`
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `,
 };

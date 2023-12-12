@@ -1,6 +1,9 @@
 export const getMemoData = (memoId: string) => {
-  const memo = localStorage.getItem(memoId);
+  console.log(memoId);
+  if (memoId) {
+    const memo = localStorage.getItem(memoId);
 
-  const parseMemo = JSON.parse(memo!).editorState;
-  return JSON.stringify(parseMemo);
+    const parseMemo = JSON.parse(memo!).editorState;
+    return JSON.stringify(parseMemo);
+  }
 };

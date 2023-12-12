@@ -20,7 +20,7 @@ const NoMemo = () => {
     };
     localStorage.setItem(memoId, JSON.stringify(newMemo));
 
-    navigate(`/${params.notebookId}/?memo=${memoId}`);
+    navigate(`/${params.notebookId}/${memoId}`);
   };
   return (
     <S.Container>

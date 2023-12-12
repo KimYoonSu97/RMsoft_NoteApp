@@ -1,35 +1,33 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { InitialConfigType } from "@lexical/react/LexicalComposer";
-import { throttle } from "lodash";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { EditorState, createEditor } from "lexical";
 import { getMemoData } from "../../util/getMemoData";
 import BasicEditor from "./BasicEditor";
 
 const Editor = () => {
   const location = useLocation();
+
+  const [memoId, setMemoId] = useState<string>(location.pathname.split("/")[2]);
   const [serializedEditorState, setSerializedEditorState] =
     useState<string>("");
-  const editor = createEditor();
 
   useEffect(() => {
-    const newEditorState = getMemoData(location.search.split("=")[1]);
+    const memoId = location.pathname.split("/")[2];
 
-    setSerializedEditorState(newEditorState);
-  }, [location]);
+    setMemoId(memoId);
+    if (!memoId) return;
+    const newEditorState = getMemoData(memoId);
+    console.log(newEditorState);
+    setSerializedEditorState(newEditorState!);
+  }, [location.pathname]);
 
   if (!serializedEditorState) return <div>loading...</div>;
-  const initialConfig = {
-    namespace: "MyEditor",
-    onError: (error: Error) => {
-      console.error(error);
-    },
-    editorState: editor.parseEditorState(serializedEditorState),
-  };
 
   return (
     <div>
-      <BasicEditor initialConfig={initialConfig} />
+      <BasicEditor
+        serializedEditorState={serializedEditorState}
+        memoId={memoId}
+      />
     </div>
   );
 };

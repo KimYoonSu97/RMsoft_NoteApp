@@ -13,19 +13,41 @@ import {
   EditorState,
   SerializedEditorState,
   SerializedLexicalNode,
+  createEditor,
 } from "lexical";
-import { throttle } from "lodash";
+import { set, throttle } from "lodash";
 import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";
 
 interface BasicEditorProps {
-  initialConfig: InitialConfigType;
+  // initialConfig: InitialConfigType;
+  serializedEditorState: string;
+  memoId: string;
 }
 
-const BasicEditor = ({ initialConfig }: BasicEditorProps) => {
+const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   const location = useLocation();
   const [memoList, setMemoList] = useAtom(MemoListAtom);
+  const editor = createEditor();
+
+  const [initialConfig, setInitialConfig] = useState<InitialConfigType>({
+    namespace: "MyEditor",
+    onError: (error: Error) => {
+      console.error(error);
+    },
+    editorState: editor.parseEditorState(serializedEditorState),
+  });
+
+  useEffect(() => {
+    setInitialConfig({
+      namespace: "MyEditor",
+      onError: (error: Error) => {
+        console.error(error);
+      },
+      editorState: editor.parseEditorState(serializedEditorState),
+    });
+  }, [serializedEditorState]);
 
   const [editorState, setEditorState] =
     useState<SerializedEditorState<SerializedLexicalNode>>();
@@ -38,8 +60,7 @@ const BasicEditor = ({ initialConfig }: BasicEditorProps) => {
 
   const saveMemo = useCallback(
     throttle(async (params: EditorState) => {
-      const { search } = location;
-      const memoId = search.split("=")[1];
+      const memoId = location.pathname.split("/")[2];
       const updateMemo = {
         editorState: params,
         date: new Date(),
@@ -55,12 +76,12 @@ const BasicEditor = ({ initialConfig }: BasicEditorProps) => {
       });
 
       setMemoList(newMemoList);
-    }, 3000),
-    []
+    }, 2000),
+    [memoId]
   );
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposer initialConfig={initialConfig} key={memoId}>
       <S.EditContainer>
         <RichTextPlugin
           contentEditable={<S.Editor />}

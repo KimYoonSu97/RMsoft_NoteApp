@@ -4,27 +4,38 @@ import { MemoListAtom, MemoType } from "../../../store/state";
 import { getMemoListByNotebookId } from "../../../util/getMemoListByNotebookId";
 import Memo from "./Memo";
 import { useAtom } from "jotai";
+import styled from "styled-components";
 
 const MemoList = () => {
   const param = useParams();
   const location = useLocation();
-  // const [memoList, setMemoList] = useState<MemoType[]>([]);
   const [memoList, setMemoList] = useAtom(MemoListAtom);
 
   useEffect(() => {
-    const memoList = getMemoListByNotebookId(param.notebookId!);
-    console.log(memoList);
-    if (!memoList) return;
-    setMemoList(memoList);
-  }, [location]);
+    const memoListData = getMemoListByNotebookId(param.notebookId!);
+    if (!memoListData) return;
+
+    setMemoList(memoListData);
+  }, [location.pathname]);
 
   return (
-    <div>
+    <S.Container>
       {memoList.map((memo, index) => {
         return <Memo key={index} memo={memo} setMemoList={setMemoList} />;
       })}
-    </div>
+    </S.Container>
   );
 };
 
 export default MemoList;
+
+const S = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  `,
+};

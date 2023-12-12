@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { Trash2 } from "lucide-react";
 import { useAtom } from "jotai";
 import { MemoListAtom, MemoType, NotebookListAtom } from "../../../store/state";
-import { getMemoListByNotebookId } from "../../../util/getMemoListByNotebookId";
 
 interface NotebookProps {
   notebook: string;
@@ -13,14 +12,16 @@ interface NotebookProps {
 }
 
 const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
+  const [memoList, setMemoList] = useAtom(MemoListAtom);
+
   const navigate = useNavigate();
   const param = useParams();
   const [showDelete, setShowDelete] = useState(false);
 
   const onClick = () => {
-    const memoList = getMemoListByNotebookId(notebook);
-    if (memoList) {
-      navigate(`/${notebook}/?memo=${memoList[0].id}`);
+    console.log(memoList);
+    if (memoList.length > 0) {
+      navigate(`/${notebook}/${memoList[0].id}`);
     } else {
       navigate(`/${notebook}`);
     }

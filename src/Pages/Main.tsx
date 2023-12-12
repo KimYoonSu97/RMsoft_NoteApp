@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContentBox from "../components/contentBox/ContentBox";
 import MemoBar from "../components/sideBar/MemoBar";
 import { useLocation, useParams } from "react-router-dom";
-import { useGetMemoExist } from "../hooks/useGetMemoExist";
 import { MemoListAtom } from "../store/state";
 import { useAtom } from "jotai";
 import { getMemoListByNotebookId } from "../util/getMemoListByNotebookId";
@@ -12,7 +11,6 @@ const Main = () => {
   const location = useLocation();
   const params = useParams();
   const [isNoteBookExist, setIsNoteBookExist] = useState(false);
-  const memoExist = useGetMemoExist();
   const [memo, setMemo] = useAtom(MemoListAtom);
 
   // useEffect(() => {
@@ -27,7 +25,7 @@ const Main = () => {
 
   return (
     <S.Container>
-      {getMemoListByNotebookId(params.notebookId!) ? <MemoBar /> : <></>}
+      {memo.length > 0 ? <MemoBar /> : <></>}
       <ContentBox />
     </S.Container>
   );

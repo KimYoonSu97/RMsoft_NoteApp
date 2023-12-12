@@ -7,12 +7,6 @@ export interface MemoType {
   id: string;
 }
 
-export interface MemoListType {
-  date: Date;
-  id: string;
-  editorState: EditorState;
-}
-
 export const NotebookListAtom = atom<boolean>(false);
 
 export const MemoListAtom = atom<MemoType[]>([]);
