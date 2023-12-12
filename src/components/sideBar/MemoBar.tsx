@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useGetMemoData } from "../../hooks/useGetMemoData";
 import Memo from "./memoList/Memo";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";

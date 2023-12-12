@@ -19,7 +19,7 @@ const NoMemo = ({ setIsMemoExist }: NoMemoProps) => {
     const memoId = params.notebookId + shortid.generate();
     const newMemo = {
       description: "",
-      date: new Date().toLocaleDateString(),
+      date: new Date(),
       id: memoId,
     };
     localStorage.setItem(memoId, JSON.stringify(newMemo));

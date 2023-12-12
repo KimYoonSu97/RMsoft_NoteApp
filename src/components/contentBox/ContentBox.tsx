@@ -9,17 +9,7 @@ import { MemoType } from "../../store/state";
 
 const ContentBox = () => {
   const params = useParams();
-  // const location = useLocation();
   const [isMemoExist, setIsMemoExist] = useState<boolean>(false);
-  // const memoExist = useGetMemoExist();
-
-  // useEffect(() => {
-  //   if (location.search.includes("memo")) {
-  //     setIsMemoExist(true);
-  //   } else {
-  //     setIsMemoExist(false);
-  //   }
-  // }, [location]);
 
   return (
     <S.Container $isMemoExist={getMemoListByNotebookId(params.notebookId!)}>

@@ -14,6 +14,10 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
   const param = useParams();
   const navigate = useNavigate();
 
+  const onClick = () => {
+    navigate(`/${param.notebookId}/?memo=${memo.id}`);
+  };
+
   const onMouseOver = () => {
     setShowDelete(true);
   };
@@ -22,8 +26,6 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
   };
 
   const removeMemo = () => {
-    console.log("삭제버튼클릭");
-
     if (window.confirm("메모를 삭제하시겠습니까?")) {
       localStorage.removeItem(memo.id);
       setMemoList((prev) => prev.filter((item) => item.id !== memo.id));
@@ -35,7 +37,7 @@ const Memo = ({ memo, setMemoList }: MemoProps) => {
 
   return (
     <S.Container onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      {memo.date}
+      <div onClick={onClick}> {memo.date}</div>
       {showDelete && (
         <div onClick={removeMemo}>
           <Trash2 color="gray" />
