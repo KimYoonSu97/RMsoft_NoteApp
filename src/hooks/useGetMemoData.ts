@@ -5,13 +5,14 @@ export const useGetMemoData = () => {
   const [memo, setMemo] = useState<any[]>();
   const location = useLocation();
   useEffect(() => {
-    const notebookId = location.search.replace("?note=notebook", "");
+    const notebookId = location.search.replace("?memo=", "");
+
     const memoList = Object.keys(localStorage).filter((item) => {
       return item.includes(notebookId);
     });
 
     let memoData: string[] = [];
-    console.log(memoData);
+
     if (memoList.length === 0) {
       setMemo([]);
       return;
@@ -21,8 +22,7 @@ export const useGetMemoData = () => {
         return memoData.push(memoItem);
       });
     }
-    console.log(memoData);
   }, [location]);
-
+  console.log(memo);
   return memo;
 };

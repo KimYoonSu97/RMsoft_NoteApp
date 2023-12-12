@@ -30,9 +30,9 @@ const NoteBookList = () => {
       memo: [],
     };
     const noteId = shortid.generate();
-    localStorage.setItem("notebook" + noteId, JSON.stringify(newNotebook));
+    localStorage.setItem(noteId, JSON.stringify(newNotebook));
     setIsOpen(true);
-    navigate(`/?note=notebook${noteId}`);
+    navigate(`/${noteId}`);
   };
 
   const openHandler = () => {
