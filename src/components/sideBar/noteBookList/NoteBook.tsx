@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { getNotebookName } from "../../../util/getNotebookName";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Trash2 } from "lucide-react";
 import { useAtom } from "jotai";
 import { MemoListAtom, MemoType, NotebookListAtom } from "../../../store/state";
+import { getMemoListByNotebookId } from "../../../util/getMemoListByNotebookId";
 
 interface NotebookProps {
   notebook: string;
@@ -13,30 +14,17 @@ interface NotebookProps {
 
 const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [memo, setMemo] = useAtom(MemoListAtom);
-
+  const param = useParams();
   const [showDelete, setShowDelete] = useState(false);
 
   const onClick = () => {
-    const notebookId = location.search.replace("?memo=", "");
-
-    const memoList = Object.keys(localStorage).filter((item) => {
-      return item.includes(notebookId);
-    });
-
-    let memoData: MemoType[] = [];
+    const memoList = getMemoListByNotebookId(notebook);
+    console.log(memoList);
     if (memoList) {
-      memoList.forEach((item: string) => {
-        const memoItem = JSON.parse(
-          localStorage.getItem(item) || ""
-        ) as MemoType;
-        return memoData.push(memoItem);
-      });
-      setMemo(memoData);
+      navigate(`/${notebook}/?memo=${memoList[0].id}`);
+    } else {
+      navigate(`/${notebook}`);
     }
-
-    navigate(`/?note=${notebook}`);
   };
   const onMouseOver = () => {
     setShowDelete(true);

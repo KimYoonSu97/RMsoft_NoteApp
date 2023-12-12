@@ -17,8 +17,8 @@ const NoteBookList = () => {
   const [notebooks, setNotebooks] = useState<string[]>([]);
 
   useEffect(() => {
-    const notebooks = Object.keys(localStorage).filter((item) =>
-      item.includes("notebook")
+    const notebooks = Object.keys(localStorage).filter(
+      (item) => item.length < 13
     );
     setNotebooks(notebooks);
   }, [location]);

@@ -9,7 +9,6 @@ import { MemoType } from "../../store/state";
 
 const ContentBox = () => {
   const params = useParams();
-  console.log(params);
   // const location = useLocation();
   const [isMemoExist, setIsMemoExist] = useState<boolean>(false);
   // const memoExist = useGetMemoExist();

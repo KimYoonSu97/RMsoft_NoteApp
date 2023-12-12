@@ -4,16 +4,29 @@ import { useGetMemoData } from "../../hooks/useGetMemoData";
 import Memo from "./memoList/Memo";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";
+import MemoList from "./memoList/MemoList";
+import { useNavigate, useParams } from "react-router-dom";
+import shortid from "shortid";
 
 const MemoBar = () => {
-  const [memo, setMemo] = useAtom(MemoListAtom);
-  console.log(memo);
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    const memoId = params.notebookId + shortid.generate();
+    const newMemo = {
+      description: "",
+      date: new Date().toLocaleDateString(),
+      id: memoId,
+    };
+    localStorage.setItem(memoId, JSON.stringify(newMemo));
+    navigate(`/${params.notebookId}/?memo=${memoId}`);
+  };
+
   return (
     <S.Container>
-      {memo!.map((memo, index) => {
-        return <Memo key={index} memo={memo} />;
-      })}
-      memo
+      <MemoList />
+      <button onClick={onClick}>메모추가하기</button>
     </S.Container>
   );
 };

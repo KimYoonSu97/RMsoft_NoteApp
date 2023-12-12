@@ -23,6 +23,6 @@ export const useGetMemoData = () => {
       });
     }
   }, [location]);
-  console.log(memo);
+
   return memo;
 };

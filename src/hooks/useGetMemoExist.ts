@@ -12,7 +12,6 @@ export const useGetMemoExist = () => {
       setMemoExist(false);
       return;
     }
-    console.log(location.search);
 
     const notebookId = location.search.replace("?note=notebook", "");
 
@@ -21,7 +20,7 @@ export const useGetMemoExist = () => {
     });
 
     const isMemoExist = localStorage.getItem(memoList[0]);
-    console.log(isMemoExist);
+
     if (isMemoExist === null) {
       setMemoExist(false);
       return;

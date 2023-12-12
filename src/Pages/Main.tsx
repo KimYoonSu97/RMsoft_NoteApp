@@ -14,7 +14,6 @@ const Main = () => {
   const [isNoteBookExist, setIsNoteBookExist] = useState(false);
   const memoExist = useGetMemoExist();
   const [memo, setMemo] = useAtom(MemoListAtom);
-  console.log(getMemoListByNotebookId(params.notebookId!));
 
   // useEffect(() => {
   //   setIsNoteBookExist(memoExist);
