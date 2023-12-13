@@ -84,13 +84,11 @@ yarn start
 <img src="https://img.shields.io/badge/shortid-61DAFB?style=for-the-badge&"/>
 
 - 노트 / 메모별 별도 아이디 값 부여로 데이터를 관리하였습니다.
+- shortid() = notebookId
+- notebookId + shortid() = memoId
   <br />
 
 <img src="https://img.shields.io/badge/jotai-61DAFB?style=for-the-badge&"/>
 
 - 전역상태 관리라이브러리로 작성 내용이 리스트에 적용 될 수 있도록 구현하였습니다.
   <br />
-
-<div align='left'>
-
-</div>
