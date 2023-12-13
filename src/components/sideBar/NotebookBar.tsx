@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import NotebookList from "./notebookList/NotebookList";
 
 const NotebookBar = () => {
-  return <S.Container>{/* <NotebookList /> */}</S.Container>;
+  return (
+    <S.Container>
+      <NotebookList />
+    </S.Container>
+  );
 };
 
 export default NotebookBar;
@@ -12,6 +17,7 @@ const S = {
     background-color: red;
     max-width: 200px;
     width: 100%;
-    height: calc(100vh - 50px);
+    height: 100%;
+    /* height: 100vh; */
   `,
 };

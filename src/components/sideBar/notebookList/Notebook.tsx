@@ -12,19 +12,13 @@ interface NotebookProps {
 }
 
 const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
-  const [memoList, setMemoList] = useAtom(MemoListAtom);
-
   const navigate = useNavigate();
   const param = useParams();
   const [showDelete, setShowDelete] = useState(false);
 
   const onClick = () => {
-    console.log(memoList);
-    if (memoList.length > 0) {
-      navigate(`/${notebook}/${memoList[0].id}`);
-    } else {
-      navigate(`/${notebook}`);
-    }
+    console.log(notebook);
+    navigate(`/${notebook}`);
   };
   const onMouseOver = () => {
     setShowDelete(true);

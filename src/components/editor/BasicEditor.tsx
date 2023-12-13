@@ -15,7 +15,7 @@ import {
   SerializedLexicalNode,
   createEditor,
 } from "lexical";
-import { set, throttle } from "lodash";
+import { debounce, set, throttle } from "lodash";
 import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";
@@ -31,6 +31,7 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   const [memoList, setMemoList] = useAtom(MemoListAtom);
   const editor = createEditor();
 
+  const [editorComponent, setEditorComponent] = useState<JSX.Element>(<></>);
   const [initialConfig, setInitialConfig] = useState<InitialConfigType>({
     namespace: "MyEditor",
     onError: (error: Error) => {
@@ -40,14 +41,36 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   });
 
   useEffect(() => {
-    setInitialConfig({
+    console.log(serializedEditorState);
+    console.log(memoId);
+    const newConfig = {
       namespace: "MyEditor",
       onError: (error: Error) => {
         console.error(error);
       },
       editorState: editor.parseEditorState(serializedEditorState),
-    });
-  }, [serializedEditorState]);
+    };
+    setInitialConfig(newConfig);
+
+    const newEditor = () => {
+      return (
+        <LexicalComposer initialConfig={newConfig} key={memoId}>
+          <S.EditContainer>
+            <RichTextPlugin
+              contentEditable={<S.Editor />}
+              placeholder={
+                <S.PlaceHolder>새로운 노트를 작성하세요.</S.PlaceHolder>
+              }
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            <HistoryPlugin />
+            <OnChangePlugin onChange={onChange} />
+          </S.EditContainer>
+        </LexicalComposer>
+      );
+    };
+    setEditorComponent(newEditor());
+  }, [serializedEditorState, memoId]);
 
   const [editorState, setEditorState] =
     useState<SerializedEditorState<SerializedLexicalNode>>();
@@ -59,7 +82,7 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   };
 
   const saveMemo = useCallback(
-    throttle(async (params: EditorState) => {
+    debounce(async (params: EditorState) => {
       const memoId = location.pathname.split("/")[2];
       const updateMemo = {
         editorState: params,
@@ -76,23 +99,11 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
       });
 
       setMemoList(newMemoList);
-    }, 2000),
+    }, 1000),
     [memoId]
   );
 
-  return (
-    <LexicalComposer initialConfig={initialConfig} key={memoId}>
-      <S.EditContainer>
-        <RichTextPlugin
-          contentEditable={<S.Editor />}
-          placeholder={<S.PlaceHolder>새로운 노트를 작성하세요.</S.PlaceHolder>}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin />
-        <OnChangePlugin onChange={onChange} />
-      </S.EditContainer>
-    </LexicalComposer>
-  );
+  return <>{editorComponent}</>;
 };
 
 export default BasicEditor;

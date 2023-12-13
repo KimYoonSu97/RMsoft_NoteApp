@@ -4,6 +4,7 @@ import Editor from "../editor/Editor";
 import { useLocation, useParams } from "react-router-dom";
 import { MemoListAtom, MemoType } from "../../store/state";
 import { useAtom } from "jotai";
+import { getMemoListByNotebookId } from "../../util/getMemoListByNotebookId";
 
 const ContentBox = () => {
   const location = useLocation();
@@ -12,9 +13,11 @@ const ContentBox = () => {
 
   return (
     <S.Container $isMemoExist={memoList}>
-      {memoList.length > 0 ? <Editor /> : <NoMemo />}
-
-      {/* {params.memoId ?? <Editor></Editor>} */}
+      {memoList.length > 0 && location.pathname.split("/")[2] ? (
+        <Editor />
+      ) : (
+        <NoMemo />
+      )}
     </S.Container>
   );
 };
@@ -22,14 +25,12 @@ const ContentBox = () => {
 export default ContentBox;
 
 interface ContainerProps {
-  $isMemoExist: MemoType[] | null;
+  $isMemoExist: MemoType[];
 }
 
 const S = {
   Container: styled.div<ContainerProps>`
     background-color: green;
-    width: ${(props) =>
-      props.$isMemoExist ? "calc(100% - 400px)" : "calc(100% - 200px)"};
-    /* width: calc(100% - 400px); */
+    width: calc(100% - 500px);
   `,
 };

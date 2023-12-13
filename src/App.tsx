@@ -1,6 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
 import Router from "./shared/Router";
-import styled from "styled-components";
 
 const App = () => {
   return (
@@ -13,9 +12,3 @@ const App = () => {
 };
 
 export default App;
-
-const S = {
-  Container: styled.div`
-    display: flex;
-  `,
-};

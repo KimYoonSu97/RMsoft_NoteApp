@@ -7,19 +7,21 @@ import { getNotebookName } from "../../../util/getNotebookName";
 // import Notebook from "./Notebook";
 import { NotebookListAtom } from "../../../store/state";
 import { useAtom } from "jotai";
+import Notebook from "./Notebook";
 
 const NotebookList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const [isOpen, setIsOpen] = useAtom(NotebookListAtom);
 
   const [notebooks, setNotebooks] = useState<string[]>([]);
 
   useEffect(() => {
+    console.log("노트북리스트 리렌더링");
     const notebooks = Object.keys(localStorage).filter(
       (item) => item.length < 13
     );
+    console.log("노트북리스트", notebooks);
     setNotebooks(notebooks);
   }, [location]);
 
@@ -58,7 +60,7 @@ const NotebookList = () => {
           children={<Plus color="gray" />}
         />
       </S.Tab>
-      {/* {isOpen &&
+      {isOpen &&
         notebooks.length > 0 &&
         notebooks.map((noteBook, index) => {
           return (
@@ -68,7 +70,7 @@ const NotebookList = () => {
               setNotebooks={setNotebooks}
             />
           );
-        })} */}
+        })}
     </S.Container>
   );
 };

@@ -7,21 +7,24 @@ import { useAtom } from "jotai";
 import styled from "styled-components";
 
 const MemoList = () => {
-  const param = useParams();
   const location = useLocation();
   const [memoList, setMemoList] = useAtom(MemoListAtom);
 
   useEffect(() => {
-    const memoListData = getMemoListByNotebookId(param.notebookId!);
+    const noteId = location.pathname.split("/")[1];
+    if (!noteId) {
+      setMemoList([]);
+      return;
+    }
+    const memoListData = getMemoListByNotebookId(noteId);
     if (!memoListData) return;
-
     setMemoList(memoListData);
   }, [location.pathname]);
 
   return (
     <S.Container>
       {memoList.map((memo, index) => {
-        return <Memo key={index} memo={memo} setMemoList={setMemoList} />;
+        return <Memo key={index} memo={memo} />;
       })}
     </S.Container>
   );

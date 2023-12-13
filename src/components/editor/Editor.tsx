@@ -6,17 +6,16 @@ import BasicEditor from "./BasicEditor";
 const Editor = () => {
   const location = useLocation();
 
-  const [memoId, setMemoId] = useState<string>(location.pathname.split("/")[2]);
+  const [memoId, setMemoId] = useState<string>("");
   const [serializedEditorState, setSerializedEditorState] =
     useState<string>("");
 
   useEffect(() => {
     const memoId = location.pathname.split("/")[2];
-
     setMemoId(memoId);
     if (!memoId) return;
     const newEditorState = getMemoData(memoId);
-    console.log(newEditorState);
+
     setSerializedEditorState(newEditorState!);
   }, [location.pathname]);
 

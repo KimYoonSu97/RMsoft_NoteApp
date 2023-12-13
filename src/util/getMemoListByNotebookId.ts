@@ -9,6 +9,7 @@ export const getMemoListByNotebookId = (
 
   if (filtredMemoList.length === 0) return null;
 
+  console.log(filtredMemoList);
   const memoList = filtredMemoList.map((item) => {
     const memo = localStorage.getItem(item);
     const memoObj = JSON.parse(memo!);

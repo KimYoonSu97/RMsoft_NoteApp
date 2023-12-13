@@ -2,14 +2,13 @@ import React from "react";
 import { Outlet } from "react-router";
 import styled from "styled-components";
 import TopBar from "../topBar/TopBar";
-import NoteBookBar from "../sideBar/NoteBookBar";
+import NotebookBar from "../sideBar/NotebookBar";
 
 const RootLayout = () => {
   return (
     <S.Container>
       <S.Inner>
-        <TopBar />
-        <NoteBookBar />
+        <NotebookBar />
         <S.ContentWrapper>
           <Outlet />
         </S.ContentWrapper>
@@ -24,7 +23,7 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    /* width: 100vw; */
     align-items: center;
     position: relative;
   `,
@@ -36,7 +35,7 @@ const S = {
   `,
   ContentWrapper: styled.div`
     position: absolute;
-    top: 50px;
+    top: 0;
     left: 200px;
     width: 100%;
   `,
