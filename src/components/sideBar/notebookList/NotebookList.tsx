@@ -28,7 +28,7 @@ const NotebookList = () => {
       memo: [],
     };
 
-    if (!newNotebook.title) {
+    if (!newNotebook.title?.trim()) {
       alert("노트북 이름은 비워둘 수 없습니다.");
       return;
     }
@@ -93,6 +93,8 @@ const S = {
     display: flex;
     gap: 4px;
     align-items: center;
+    height: 40px;
+    justify-content: center;
   `,
   AddNoteBookButton: styled.div`
     margin-left: auto;
@@ -104,5 +106,9 @@ const S = {
   ContentBox: styled.div``,
   MenuTitle: styled.div`
     cursor: pointer;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
   `,
 };

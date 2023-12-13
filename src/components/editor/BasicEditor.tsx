@@ -15,7 +15,7 @@ import {
   SerializedLexicalNode,
   createEditor,
 } from "lexical";
-import { debounce } from "lodash";
+import { debounce, throttle } from "lodash";
 import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";
@@ -57,7 +57,9 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
             <RichTextPlugin
               contentEditable={<S.Editor />}
               placeholder={
-                <S.PlaceHolder>새로운 노트를 작성하세요.</S.PlaceHolder>
+                <S.PlaceHolder>
+                  Type / for menu or Select From Templates
+                </S.PlaceHolder>
               }
               ErrorBoundary={LexicalErrorBoundary}
             />
@@ -80,7 +82,7 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   };
 
   const saveMemo = useCallback(
-    debounce(async (params: EditorState) => {
+    throttle(async (params: EditorState) => {
       const memoId = location.pathname.split("/")[2];
       const updateMemo = {
         editorState: params,
@@ -97,7 +99,7 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
       });
 
       setMemoList(newMemoList);
-    }, 1000),
+    }, 2000),
     [memoId]
   );
 
@@ -132,5 +134,7 @@ const S = {
     pointer-events: none;
     top: 50px;
     left: 50px;
+    font-size: medium;
+    color: lightgray;
   `,
 };

@@ -7,6 +7,7 @@ import { createEditor } from "lexical";
 import { $getRoot } from "lexical";
 import { useAtom } from "jotai";
 import { getDate } from "../../../util/getDate";
+import { getPreviewBody } from "../../../util/getPreviewBody";
 
 interface MemoProps {
   memo: MemoType;
@@ -18,7 +19,6 @@ const Memo = ({ memo }: MemoProps) => {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [date, setDate] = useState("");
   const param = useParams();
   const navigate = useNavigate();
 
@@ -31,9 +31,9 @@ const Memo = ({ memo }: MemoProps) => {
     const editorStateTextString = parsedEditorState.read(() =>
       $getRoot().getTextContent()
     );
+
     setTitle(editorStateTextString.split("\n\n")[0]);
-    setBody(editorStateTextString.split("\n\n")[1]);
-    setDate(new Date(memo.date).toLocaleString());
+    setBody(getPreviewBody(editorStateTextString));
   }, [memo]);
 
   const onClick = () => {

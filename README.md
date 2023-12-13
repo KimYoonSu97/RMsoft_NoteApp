@@ -1,46 +1,96 @@
-# Getting Started with Create React App
+<div align="center">
+  
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=250&section=header&text=RM-Note&fontSize=60)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+</div>
 
-## Available Scripts
+## RM-note
 
-In the project directory, you can run:
+> RM-Soft 과제테스트 : 노트앱
+> <br />
+> 개발기간: 23.12.11 - 23.12.13
 
-### `yarn start`
+## 배포
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+🔗 : https://r-msoft-note-app.vercel.app/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 시작가이드
 
-### `yarn test`
+- react 18.2.0
+- node 18.18.1
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone https://github.com/KimYoonSu97/RMsoft_NoteApp.git
+-------
+yarn
+-------
+yarn start
+```
 
-### `yarn build`
+## 기능 요구사항
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+⭐️ 백엔드 구현 X => 로컬스토리지 사용
+<br />
+✅ NOTEBOOKS 목록 확인
+<br />
+✅ NOTEBOOKS 추가 삭제
+<br />
+✅ NOTEBOOKS 내부에 메모 추가 삭제
+<br />
+✅ NOTEBOOKS 내부에 NOTEBOOKS 추가 불가능
+<br />
+✅ 메모 목록에서 메모선택하여 확인 및 수정 가능
+<br />
+✅ 텍스트 입력 후 일정 시간 후에 입력 사항이 저장
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 스타일 요구(참고)사항
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+✅ 최소 가로길이 1400px 최대 가로길이는 1920px
+<br />
+✅ 최초 화면에서 NOTEBOOKS는 하나도 없는 상태
+<br />
+✅ 기본 UI는 UpNote활용
+<br />
+✅ 메모목록에서 메모 내용의 첫번째 줄이 메모의 제목으로 표시
+<br />
+✅ 메모 제목이 메모목록의 가로길이를 넘어가는 경우 말줄임표 처리
+<br />
 
-### `yarn eject`
+## 사용 라이브러리
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<img src="https://img.shields.io/badge/lexical-61DAFB?style=for-the-badge&"/>
+⭐️필수사용⭐️
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 렉시컬 라이브러리를 사용하여 구현하였습니다.
+  onChangePlugin을 선언하여 사용하였고 onChange 함수 내부에서 throttle로 자동저장 기능을 구현하였습니다.
+  <br />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<img src="https://img.shields.io/badge/lodash-3492FF?style=for-the-badge&logo=lodash&logoColor=white"/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- 로대시 라이브러리의 throttle를 활용하여 작성 내용 2초 단위로 자동저장 기능을 구현하였습니다.
+  <br />
 
-## Learn More
+<img src="https://img.shields.io/badge/reactrouter-DB7093?style=for-the-badge&logo=reactrouter&logoColor=white"/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 노트 / 메모의 아이디값을 추출하여 사용하기 위해서 사용하였습니다.
+  <br />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://img.shields.io/badge/styledcomponents-CA4245?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
+
+- CSS-in- JS방식의styled-components사용,
+  디자인시스템의 font적용은 별도의 상수선언으로 전역관리
+  <br />
+
+<img src="https://img.shields.io/badge/shortid-61DAFB?style=for-the-badge&"/>
+
+- 노트 / 메모별 별도 아이디 값 부여로 데이터를 관리하였습니다.
+  <br />
+
+<img src="https://img.shields.io/badge/jotai-61DAFB?style=for-the-badge&"/>
+
+- 전역상태 관리라이브러리로 작성 내용이 리스트에 적용 될 수 있도록 구현하였습니다.
+  <br />
+
+<div align='left'>
+
+</div>
