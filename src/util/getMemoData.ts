@@ -1,5 +1,4 @@
 export const getMemoData = (memoId: string) => {
-  console.log(memoId);
   if (memoId) {
     const memo = localStorage.getItem(memoId);
 

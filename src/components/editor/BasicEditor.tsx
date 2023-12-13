@@ -15,7 +15,7 @@ import {
   SerializedLexicalNode,
   createEditor,
 } from "lexical";
-import { debounce, set, throttle } from "lodash";
+import { debounce } from "lodash";
 import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import { MemoListAtom } from "../../store/state";

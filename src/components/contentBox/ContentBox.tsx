@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Editor from "../editor/Editor";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { MemoListAtom, MemoType } from "../../store/state";
 import { useAtom } from "jotai";
-import { getMemoListByNotebookId } from "../../util/getMemoListByNotebookId";
 
 const ContentBox = () => {
   const location = useLocation();

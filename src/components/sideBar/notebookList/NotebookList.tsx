@@ -4,6 +4,7 @@ import { ChevronRight, ChevronDown, Plus } from "lucide-react";
 import shortid from "shortid";
 import { useLocation, useNavigate } from "react-router-dom";
 import Notebook from "./Notebook";
+import { checkNotebookColor } from "../../../util/checkNotebookColor";
 
 const NotebookList = () => {
   const navigate = useNavigate();
@@ -16,15 +17,22 @@ const NotebookList = () => {
     const notebooks = Object.keys(localStorage).filter(
       (item) => item.length < 13
     );
+
     setNotebooks(notebooks);
   }, [location]);
 
   const addNoteBook = () => {
     const newNotebook = {
       title: window.prompt("노트북 이름을 입력해주세요"),
-      color: "pink",
+      color: checkNotebookColor(),
       memo: [],
     };
+
+    if (!newNotebook.title) {
+      alert("노트북 이름은 비워둘 수 없습니다.");
+      return;
+    }
+
     const noteId = shortid.generate();
     localStorage.setItem(noteId, JSON.stringify(newNotebook));
     setIsOpen(true);

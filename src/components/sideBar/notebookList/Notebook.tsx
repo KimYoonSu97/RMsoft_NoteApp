@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getNotebookName } from "../../../util/getNotebookName";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -13,6 +13,14 @@ const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
+  const [num, setNum] = useState<number>(0);
+
+  useEffect(() => {
+    const memoList = Object.keys(localStorage).filter(
+      (item) => item.includes(notebook) && item !== notebook
+    );
+    setNum(memoList.length);
+  }, [location.pathname]);
 
   const onClick = () => {
     navigate(`/${notebook}`);
@@ -53,6 +61,7 @@ const Notebook = ({ notebook, setNotebooks }: NotebookProps) => {
       <S.InfoArea>
         <S.Cover $color={getNotebookName(notebook).color} />
         <S.Title onClick={onClick}>{getNotebookName(notebook).title}</S.Title>
+        <S.MemoCount>{num}</S.MemoCount>
       </S.InfoArea>
       {showDelete && (
         <div onClick={removeNoteBook}>
@@ -96,4 +105,8 @@ const S = {
     background-color: ${(props) => props.$color};
   `,
   Title: styled.div``,
+  MemoCount: styled.div`
+    font-size: small;
+    color: gray;
+  `,
 };

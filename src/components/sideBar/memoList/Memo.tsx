@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createEditor } from "lexical";
 import { $getRoot } from "lexical";
 import { useAtom } from "jotai";
-import { set } from "lodash";
+import { getDate } from "../../../util/getDate";
 
 interface MemoProps {
   memo: MemoType;
@@ -49,7 +49,6 @@ const Memo = ({ memo }: MemoProps) => {
 
   const removeMemo = () => {
     if (window.confirm("메모를 삭제하시겠습니까?")) {
-      console.log(memo.id);
       localStorage.removeItem(memo.id);
       setMemoList(memoList.filter((prevMemo) => prevMemo.id !== memo.id));
       navigate(`/${param.notebookId}`);
@@ -63,9 +62,9 @@ const Memo = ({ memo }: MemoProps) => {
   return (
     <S.Container onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       <S.Contents onClick={onClick}>
-        <S.Title>{title}</S.Title>
-        <S.Body> {body ? body : "내용 없음"}</S.Body>
-        <S.Date>{new Date(memo.date).toLocaleString()}</S.Date>
+        <S.Title>{title ? title : "New Note"}</S.Title>
+        <S.Body> {body ? body : "No additional text"}</S.Body>
+        <S.Date>{getDate(new Date(memo.date))}</S.Date>
       </S.Contents>
       {showDelete && (
         <S.removeButton onClick={removeMemo}>
