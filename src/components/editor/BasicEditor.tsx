@@ -41,8 +41,6 @@ const BasicEditor = ({ serializedEditorState, memoId }: BasicEditorProps) => {
   });
 
   useEffect(() => {
-    console.log(serializedEditorState);
-    console.log(memoId);
     const newConfig = {
       namespace: "MyEditor",
       onError: (error: Error) => {
@@ -110,21 +108,19 @@ export default BasicEditor;
 
 const S = {
   Editor: styled(ContentEditable)`
-    /* width: 100%; */
     height: 100%;
     outline: none;
     padding: 50px;
-    color: white;
-    border: 1px solid black;
+    color: #1a1a1a;
     border: none;
-
+    line-height: 1.5;
     &:focus {
       border: none;
       outline: none;
     }
-
+    font-size: medium;
     p:first-child {
-      font-size: 30px;
+      font-size: xx-large;
       font-weight: bold;
     }
   `,

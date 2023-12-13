@@ -17,7 +17,10 @@ const MemoList = () => {
       return;
     }
     const memoListData = getMemoListByNotebookId(noteId);
-    if (!memoListData) return;
+    if (!memoListData) {
+      setMemoList([]);
+      return;
+    }
     setMemoList(memoListData);
   }, [location.pathname]);
 
@@ -38,7 +41,7 @@ const S = {
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     box-sizing: border-box;
   `,
 };

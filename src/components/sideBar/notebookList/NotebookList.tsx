@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChevronRight, ChevronDown, Plus } from "lucide-react";
 import shortid from "shortid";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getNotebookName } from "../../../util/getNotebookName";
-// import Notebook from "./Notebook";
-import { NotebookListAtom } from "../../../store/state";
-import { useAtom } from "jotai";
 import Notebook from "./Notebook";
 
 const NotebookList = () => {
@@ -17,11 +13,9 @@ const NotebookList = () => {
   const [notebooks, setNotebooks] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log("노트북리스트 리렌더링");
     const notebooks = Object.keys(localStorage).filter(
       (item) => item.length < 13
     );
-    console.log("노트북리스트", notebooks);
     setNotebooks(notebooks);
   }, [location]);
 
@@ -41,6 +35,10 @@ const NotebookList = () => {
     setIsOpen(!isOpen);
   };
 
+  const onClickNotebookMenu = () => {
+    navigate(`/`);
+  };
+
   return (
     <S.Container>
       <S.Tab>
@@ -54,7 +52,7 @@ const NotebookList = () => {
             )
           }
         />
-        NOTEBOOKS
+        <S.MenuTitle onClick={onClickNotebookMenu}>NOTEBOOKS</S.MenuTitle>
         <S.AddNoteBookButton
           onClick={addNoteBook}
           children={<Plus color="gray" />}
@@ -83,13 +81,20 @@ const S = {
     width: 100%;
   `,
   Tab: styled.div`
+    padding: 10px 0;
     display: flex;
     gap: 4px;
     align-items: center;
   `,
   AddNoteBookButton: styled.div`
     margin-left: auto;
+    cursor: pointer;
   `,
-  IsOpenButton: styled.div``,
+  IsOpenButton: styled.div`
+    cursor: pointer;
+  `,
   ContentBox: styled.div``,
+  MenuTitle: styled.div`
+    cursor: pointer;
+  `,
 };

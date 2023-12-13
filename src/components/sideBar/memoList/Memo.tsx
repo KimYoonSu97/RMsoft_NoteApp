@@ -23,7 +23,6 @@ const Memo = ({ memo }: MemoProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("메모 리렌더링");
     const editor = createEditor({
       editable: false,
     });
@@ -52,7 +51,7 @@ const Memo = ({ memo }: MemoProps) => {
     if (window.confirm("메모를 삭제하시겠습니까?")) {
       console.log(memo.id);
       localStorage.removeItem(memo.id);
-      // setMemoList(memoList.filter((memo) => memo.id !== memo.id));
+      setMemoList(memoList.filter((prevMemo) => prevMemo.id !== memo.id));
       navigate(`/${param.notebookId}`);
     } else {
       return;
@@ -66,8 +65,7 @@ const Memo = ({ memo }: MemoProps) => {
       <S.Contents onClick={onClick}>
         <S.Title>{title}</S.Title>
         <S.Body> {body ? body : "내용 없음"}</S.Body>
-        {new Date(memo.date).toLocaleString()}
-        {memo.date && <div>{memo.date.toLocaleString()}</div>}
+        <S.Date>{new Date(memo.date).toLocaleString()}</S.Date>
       </S.Contents>
       {showDelete && (
         <S.removeButton onClick={removeMemo}>
@@ -85,8 +83,10 @@ const S = {
     display: flex;
     width: 100%;
     position: relative;
-    border: 1px solid black;
+
     cursor: pointer;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
   `,
   Contents: styled.div`
     width: 90%;
@@ -100,12 +100,21 @@ const S = {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: bold;
+    color: #1a1a1a;
+    font-size: large;
   `,
   Body: styled.div`
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: #757575;
+    font-size: medium;
+  `,
+  Date: styled.div`
+    color: #757575;
+    font-size: small;
   `,
   removeButton: styled.div`
     cursor: pointer;

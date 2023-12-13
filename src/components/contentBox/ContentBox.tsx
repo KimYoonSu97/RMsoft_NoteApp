@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import NoMemo from "./NoMemo";
 import Editor from "../editor/Editor";
 import { useLocation, useParams } from "react-router-dom";
 import { MemoListAtom, MemoType } from "../../store/state";
@@ -16,7 +15,7 @@ const ContentBox = () => {
       {memoList.length > 0 && location.pathname.split("/")[2] ? (
         <Editor />
       ) : (
-        <NoMemo />
+        <S.NoNote>노트북을 선택하고 메모를 추가해보세요.</S.NoNote>
       )}
     </S.Container>
   );
@@ -30,7 +29,18 @@ interface ContainerProps {
 
 const S = {
   Container: styled.div<ContainerProps>`
-    background-color: green;
     width: calc(100% - 500px);
+    height: 100vh;
+    border-right: 1px solid #e0e0e0;
+  `,
+  NoNote: styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+    color: #757575;
   `,
 };

@@ -7,6 +7,4 @@ export interface MemoType {
   id: string;
 }
 
-export const NotebookListAtom = atom<boolean>(false);
-
 export const MemoListAtom = atom<MemoType[]>([]);
